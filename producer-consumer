@@ -1,0 +1,47 @@
+Terminal 1
+
+Type cd kafka - to navigate into kafka Directory.
+
+Start the Kafka environment
+
+step 1 - To Generate a Cluster UUID
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+
+step 2 - To Format Log Directories
+bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties
+
+step 3 - Start the Kafka Server
+bin/kafka-server-start.sh config/server.properties
+
+
+
+Terminal 2
+
+Type cd kafka - to navigate into kafka Directory.
+
+Create a topic to store your events
+
+step 4 - bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+
+step 5 - bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+
+
+Write some events into the topic
+
+step 6 - Producer
+bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+>This is my first event
+>This is my second event
+
+
+
+Terminal 3
+
+Type cd kafka - to navigate into kafka Directory.
+
+Read the events
+
+step 7 - Consumer
+bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+>This is my first event
+>This is my second event
